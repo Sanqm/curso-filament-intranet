@@ -16,8 +16,12 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class CityResource extends Resource
 {
     protected static ?string $model = City::class;
-
+    protected static ?string $navigationGroup = 'System Managament';
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+// es importante que a las dos variables anteriores les respetemos el nombra dado ya que son reconocidas por filament
+//para buildear el aside y su arbol de navegacon, acordar en cada uno de los submenús que queramos 
+// meter dentro de nuestro grupo deberemos crearle la misma variable
+protected static ?int $navigationSort =2;
 
     public static function form(Form $form): Form
     {

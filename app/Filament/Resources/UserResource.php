@@ -26,7 +26,13 @@ class UserResource extends Resource
     protected static ?string $model = User::class;
     protected static ?string $navigationLabel = "Employees"; // esta linea permite cambiar el nombre dado al recurso 
     //insertado en la barra de aside iquierada
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group'; // personalizacion de icono del aside ojo es o no cero
+
+    protected static ?string $navigationGroup = 'Employees Managament'; // como vimos en el recurso de ciudades, estado, country
+    // que metimos en su propio arbol harems los mismo con los empleados y aquellas fuciones que vayamos añadiendo
+
+    protected static ?int $navigationSort =1; // esto permite establecer el orden de aparicion de los recursos teniendo 
+    //en cuenta que esta variable a de aparecer en cada uno de ellos y se le deberá dar el valor númerico del mismo
 
     // acordemosnos que en los recursos será deonde se montarán las vistas de cada uno de los creados
     public static function form(Form $form): Form
@@ -96,15 +102,29 @@ class UserResource extends Resource
 
     public static function table(Table $table): Table
     {
+        //Recordemos que lo  que se añade aquí será la parte visual que veamos en la vista
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable() // buscable
+                    ->sortable(),  // ordeneable
+                    
                 Tables\Columns\TextColumn::make('email')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('email_verified_at')
-                    ->dateTime()
+                    ->searchable()
                     ->sortable(),
+                    
+                Tables\Columns\TextColumn::make('addres') 
+                ->sortable()   
+                ->toggleable(isToggledHiddenByDefault: false), // esto permite que esta opción se pueda mostrar o no 
+                //dependiendo de si lo selecciona el usuario
+                Tables\Columns\TextColumn::make('postal_code') 
+                ->sortable()   
+                ->searchable()
+                ->toggleable(isToggledHiddenByDefault: false),
+                Tables\Columns\TextColumn::make('email_verified_at')
+                    ->dateTime() // estable la hora acutal del sistema en dicho campo 
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault:true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
