@@ -56,5 +56,18 @@ class User extends Authenticatable
     public function country(){
         return $this->belongsTo(Country::class);
     }
-    
+
+    ///// Establecemos ls relaciones con las tablas pivote
+    public function calendars(){
+        return $this->belongsToMany(Calendar::class); // ya que un calendario pertenence a mas de una persona
+    }
+    public function departaments(){
+        return $this->belongsToMany(Department::class); // ya que un departamento tiene diferentes empleados
+    }
+    public function holidays(){
+        return $this->belongsToMany(Holiday::class); // ya que varios usuarios pueden tner el mismo dia libre
+    }
+    public function timesheets(){
+        return $this->belongsToMany(Timesheet::class); //ya que diferentes horarios pueden tener diferentes usuario 
+    }
 }

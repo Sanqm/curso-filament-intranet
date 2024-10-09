@@ -8,11 +8,14 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     * 
      */
     public function up(): void
-    {
+    { // establecemos los campos union en la tabla pivote, recordemos que las mismas se crean con los id de cda 
+        ///una de las tablas realacionadas
         Schema::create('table_user_calendar', function (Blueprint $table) {
-            $table->id();
+            $table->foreignId('user_id');
+            $table->foreignId('calandar_id'); 
             $table->timestamps();
         });
     }

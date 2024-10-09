@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('table_user_departament', function (Blueprint $table) {
-            $table->id();
+        Schema::create('table_user_department', function (Blueprint $table) {
+            $table->foreignId('user_id');
+            $table->foreignId('department_id'); 
             $table->timestamps();
         });
     }
@@ -22,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('table_user_departament');
+        Schema::dropIfExists('table_user_department');
     }
 };
