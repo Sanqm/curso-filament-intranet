@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('calendar_id'); // establecemos relación con calendario
             $table->foreignId('user_id'); // establecemos la relacion con los usuario 
             $table->date('day');// este campo se crear para establecer si se le concede el dia o no
-            $table->enum('type', ['decline, approved', 'pending'])->default('pending'); // y este para establecer el estado 
+            $table->enum('type', ['decline', 'approved', 'pending'])->default('pending'); // y este para establecer el estado 
             //de dicho campo
             $table->timestamps();
         });

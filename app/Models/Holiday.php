@@ -10,6 +10,23 @@ use Illuminate\Database\Eloquent\Model;
 // se establecerá la relación con los mismos
 class Holiday extends Model
 {
+
+    // prodría hacerlo como hace el con el protected guarded pero es mejor que me acostumbre asi ya que es la practica correcta
+    // para implementar en producción
+    protected $fillable = [
+        
+        'calendar_id',
+        'user_id',
+        'day',
+        'type',
+        'updated_at',
+        'created_at',
+    ];
+
+    
+    
+    
+
     use HasFactory;
     public function user(){
         return $this->belongsTo(User::class);
