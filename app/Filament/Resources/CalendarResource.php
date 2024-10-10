@@ -19,7 +19,7 @@ class CalendarResource extends Resource
     protected static ?string $modelLabel = 'Calendario';
     protected static ?string $navigationIcon = 'heroicon-o-calendar-date-range';
     protected static ?string $navigationGroup ='Employees Managament';
-
+    protected static ?int $navigationSort =6;
     public static function form(Form $form): Form
     {
         return $form
