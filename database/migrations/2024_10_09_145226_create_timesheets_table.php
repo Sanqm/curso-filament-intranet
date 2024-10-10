@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -18,6 +18,7 @@ return new class extends Migration
         Schema::create('timesheets', function (Blueprint $table) {
             $table->id();
             $table->foreignId('calendar_id');
+            $table->foreignId('user_id'); 
             $table->enum('type',['work', 'pause'])->default('work'); // cremos un campo que puede tener dos valores e indicamos 
             // que en la creación es work por defecto 
             $table->timestamp('day_in'); 

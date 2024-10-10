@@ -12,6 +12,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Filters\SelectFilter;
+ 
 
 class TimesheetResource extends Resource
 {
@@ -23,14 +25,29 @@ class TimesheetResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('calendar_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('type')
+                Forms\Components\Select::make('calendar_id')
+                    ->relationship(name: 'calendar', titleAttribute: 'name') // esto lo empleamos para establecer la relación entre un campo que se cargará de forma automática en nuestro selector
+                    // campo de la relación y titleAtribute el nombre que mostra en el selector // 'calendar' este nombre coincide conel dado a la funcion 
+                    //donde establecimos la relación en el modelo 
                     ->required(),
+
+                Forms\Components\Select::make('user_id')
+                    ->relationship(name: 'user', titleAttribute: 'name')
+                    ->required(),
+
+                Forms\Components\Select::make('type')
+                    ->options([
+                        'work' => 'Work',
+                        'pause' => 'Pause',
+                        // donde los campos dentro de las opciones serań las diferentes selecciones del select
+                    ]),
+
                 Forms\Components\DateTimePicker::make('day_in')
+
+                    ->native(false)
                     ->required(),
                 Forms\Components\DateTimePicker::make('day_out')
+                    ->native(false)
                     ->required(),
             ]);
     }
@@ -39,8 +56,10 @@ class TimesheetResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('calendar_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('calendar.name') // (calendar_id) podemos hacer la relación 
+                // commo lo especificamos ahora llamando a tabla.campodelatabla  
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('user.name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('type')
                     ->searchable(),
@@ -59,8 +78,13 @@ class TimesheetResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->filters([
-                //
+            ->filters([ // como veiamos en esta seccion podremos crear filtros para nuestra aapp
+                SelectFilter::make('type')
+                 ->options([
+                    'work' => 'Working',
+                    'pause' => 'In Pause',
+                    
+    ])
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
