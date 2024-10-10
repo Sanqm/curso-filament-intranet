@@ -20,21 +20,28 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Illuminate\Support\Collection;
 use SebastianBergmann\Type\NullType;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Forms\Components\TextInput;
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
-    protected static ?string $navigationLabel = "Employees"; // esta linea permite cambiar el nombre dado al recurso 
+    //protected static ?string $navigationLabel = "Employees"; // esta linea permite cambiar el nombre dado al recurso 
     //insertado en la barra de aside iquierada
     protected static ?string $navigationIcon = 'heroicon-o-user-group'; // personalizacion de icono del aside ojo es o no cero
 
     protected static ?string $navigationGroup = 'Employees Managament'; // como vimos en el recurso de ciudades, estado, country
     // que metimos en su propio arbol harems los mismo con los empleados y aquellas fuciones que vayamos añadiendo
 
-    protected static ?int $navigationSort =1; // esto permite establecer el orden de aparicion de los recursos teniendo 
+    protected static ?int $navigationSort = 1; // esto permite establecer el orden de aparicion de los recursos teniendo 
     //en cuenta que esta variable a de aparecer en cada uno de ellos y se le deberá dar el valor númerico del mismo
 
     // acordemosnos que en los recursos será deonde se montarán las vistas de cada uno de los creados
+    protected static ?string $modelLabel = 'Empleados';
+
+
+
     public static function form(Form $form): Form
     {
         return $form
@@ -48,7 +55,7 @@ class UserResource extends Resource
                             ->email()
                             ->required(),
                         //Forms\Components\DateTimePicker::make('email_verified_at'),
-                        
+
                         Forms\Components\TextInput::make('password')
                             ->password()
                             ->hiddenOn('edit') // ojo tenes el solo hidden que lo oculta en hiddeon lo puedes 
@@ -109,23 +116,25 @@ class UserResource extends Resource
                     ->searchable() // buscable
                     ->sortable()  // ordeneable
                     ->label(__('Nombre')),
-                    
+
                 Tables\Columns\TextColumn::make('email')
                     ->searchable()
                     ->sortable(),
-                    
-                Tables\Columns\TextColumn::make('addres') 
-                ->sortable()   
-                ->toggleable(isToggledHiddenByDefault: false), // esto permite que esta opción se pueda mostrar o no 
+
+                Tables\Columns\TextColumn::make('addres')
+                    ->sortable()
+                    ->label(__('Direccion'))
+                    ->toggleable(isToggledHiddenByDefault: false), // esto permite que esta opción se pueda mostrar o no 
                 //dependiendo de si lo selecciona el usuario
-                Tables\Columns\TextColumn::make('postal_code') 
-                ->sortable()   
-                ->searchable()
-                ->toggleable(isToggledHiddenByDefault: false),
+                Tables\Columns\TextColumn::make('postal_code')
+                    ->sortable()
+                    ->searchable()
+                    ->label(__('Codigo Postal'))
+                    ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('email_verified_at')
                     ->dateTime() // estable la hora acutal del sistema en dicho campo 
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault:true),
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -135,16 +144,20 @@ class UserResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->filters([
+            ->filters([ // configuracion para filtros 
                 //
             ])
-            ->actions([
+            ->actions([  // configuracion de los botones de acción, es decir de loq eu al pular optienes una accion
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ViewAction::make(),
+
             ])
-            ->bulkActions([
+            ->bulkActions([ // esto se para acciones que atañan a más de un registro, ten cuidado no lo estaba viendo
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
-                ]),
+
+                ])
             ]);
     }
 

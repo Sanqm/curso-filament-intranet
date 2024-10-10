@@ -22,7 +22,8 @@ class CityResource extends Resource
 //para buildear el aside y su arbol de navegacon, acordar en cada uno de los submenús que queramos 
 // meter dentro de nuestro grupo deberemos crearle la misma variable
 protected static ?int $navigationSort =2;
-
+protected static ?string $modelLabel = 'Ciudad'; 
+protected static ?string $navigationLabel='Ciudades';
     public static function form(Form $form): Form
     {
         return $form
