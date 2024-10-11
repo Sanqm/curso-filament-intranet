@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Personal\Resources;
 
-use App\Filament\Resources\HolidayResource\Pages;
-use App\Filament\Resources\HolidayResource\RelationManagers;
+use App\Filament\Personal\Resources\HolidayResource\Pages;
+use App\Filament\Personal\Resources\HolidayResource\RelationManagers;
 use App\Models\Holiday;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -11,17 +11,28 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
+
+
+/*Este panel es personalizado*/
 
 class HolidayResource extends Resource
 {
     protected static ?string $model = Holiday::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $modelLabel = 'Vaciones';
-    protected static ?string $navigationGroup = 'Employees Managament';
-    protected static ?int $navigationSort = 3;
+    protected static ?string $navigationLabel = 'Vaciones';
+
+    /*Esta funcion pa a permitir que el panel solo visualice los datos 
+    del usuario logueado*/
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->where('user_id', Auth::user()->id);
+    }
+
 
     public static function form(Form $form): Form
     {
