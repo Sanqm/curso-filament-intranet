@@ -41,20 +41,11 @@ class HolidayResource extends Resource
                 Forms\Components\Select::make('calendar_id') //// ojo te estaba dando error porque no exite el metodo relationship en un input
                     ->required()
                     ->relationship(name: 'calendar', titleAttribute: 'name'), // esto lo empleamos para establecer la relación entre un campo que se cargará de forma automática en nuestro selector
-                Forms\Components\Select::make('user_id')
-                    ->required()
-                    ->relationship(name: 'user', titleAttribute: 'name'),
+                
                 Forms\Components\DatePicker::make('day')
 
                     ->required(),
-                Forms\Components\Select::make('type')
-                    ->options([
-                        'declined' => 'Rechazadas',
-                        'approved' => 'Aprobadas',
-                        'pending' => 'Pendientes'
-                        // donde los campos dentro de las opciones serań las diferentes selecciones del select
-                    ])
-                    ->required(),
+                
             ]);
     }
 
