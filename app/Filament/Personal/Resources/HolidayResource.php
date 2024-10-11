@@ -24,7 +24,7 @@ class HolidayResource extends Resource
     protected static ?string $model = Holiday::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $navigationLabel = 'Vaciones';
+    protected static ?string $modelLabel = 'Vaciones';
 
     /*Esta funcion pa a permitir que el panel solo visualice los datos 
     del usuario logueado*/
