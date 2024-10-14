@@ -28,7 +28,9 @@ class PersonalPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Green,
             ])
-            ->profile()
+            ->login() // con esto indicamos que podemos hacer un login desde los difirentes paneles que creemos 
+            ->profile() // esto permite añadir a tu perfil la opcion de cambio de correo y pass de forma rapida
+            ->databaseNotifications() // esto permite las notificaciones en la base de datos primero relizamos la migracion 
             ->discoverResources(in: app_path('Filament/Personal/Resources'), for: 'App\\Filament\\Personal\\Resources')
             ->discoverPages(in: app_path('Filament/Personal/Pages'), for: 'App\\Filament\\Personal\\Pages')
             ->pages([
@@ -52,5 +54,6 @@ class PersonalPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ]);
+            
     }
 }
