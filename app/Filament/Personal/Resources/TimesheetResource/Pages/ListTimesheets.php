@@ -64,8 +64,8 @@ class ListTimesheets extends ListRecords
                 ->label('Parar de trabajar')
                 ->keyBindings(['command+o', 'ctrl+o'])
                 ->color('success')
-                ->visible($lastTimesheet->day_out == null && $lastTimesheet->type != 'pause')
-                ->disabled(!$lastTimesheet->day_out == null)
+                ->visible($lastTimesheet->day_out == null && $lastTimesheet->type != 'pause') // esto permite hacer el boton visible o invisible 
+                ->disabled(!$lastTimesheet->day_out == null) // dependidnedo de ciertas condiciones
                 ->requiresConfirmation()
                 ->action(function () use ($lastTimesheet) {
                     $lastTimesheet->day_out = Carbon::now();
