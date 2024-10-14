@@ -84,7 +84,7 @@ class HolidayResource extends Resource
                 SelectFilter::make('type')
                 ->options([
                     'pending' => 'Pendientes',
-                    'approved' => 'Aprobadas',
+                    'approved' => 'approved',
                     'declined' => 'Rechazadas',
                 ]),
             ])

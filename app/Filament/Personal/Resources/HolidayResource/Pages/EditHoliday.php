@@ -21,19 +21,5 @@ class EditHoliday extends EditRecord
         ];
     }
 
-    protected function handleRecordUpdate(Model $record, array $data): Model
-    {
-        $record->update($data); //donde el record es el registro con los datos actualizados pasados en el formulario
-        if($record ->type=='approved'){
-            $user = User::find($record->user_id);
-            $dataToSend = [
-                'name' => $user->name,
-               'email' => $user->email,
-               'day' =>$record->day
-            ];
-            Mail::to($user)->send(new HolidayApproved($dataToSend)); // lo mismo que en pending esta es la variable que mandamos a la vista del mail
-        }
-
-        return $record; // esta es la variale que mandamos al panel de filamente que edita el usuario 
-    }
+    
 }
