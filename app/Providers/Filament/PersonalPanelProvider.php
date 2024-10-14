@@ -40,6 +40,9 @@ class PersonalPanelProvider extends PanelProvider
             ->widgets([
               
             ])
+            ->plugins([
+                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
+            ])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

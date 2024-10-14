@@ -6,12 +6,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles; // permite immportar los roles de spatie
+use BezhanSalleh\FilamentShield\Traits\HasPanelShield; // permite usar el pluging de permisos shield
+use Filament\Models\Contracts\FilamentUser; // idema aterior
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
-
+    use HasRoles;
+    use HasPanelShield;
     /**
      * The attributes that are mass assignable.
      *

@@ -103,7 +103,11 @@ class UserResource extends Resource
                     ]),
                 //con el options aqui estamos concatenando el campo anterior por lo que debemos tener cuidadado 
                 //ya que si no se carga uno no se podrá cargar el sigueiente
-
+                Forms\Components\Select::make('roles')
+                    ->relationship('roles', 'name')
+                    ->multiple()
+                    ->preload()
+                    ->searchable()
             ]);
     }
 

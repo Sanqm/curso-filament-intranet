@@ -41,6 +41,9 @@ class DashboardPanelProvider extends PanelProvider
                // Widgets\AccountWidget::class,
                    // Widgets\FilamentInfoWidget::class,
             ])
+            ->plugins([
+                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make() // importa los roles en nuestro panel 
+            ])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
