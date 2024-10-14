@@ -9,6 +9,7 @@ use Filament\Actions;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
+use Illuminate\Notifications\Notification as NotificationsNotification;
 use Illuminate\Support\Facades\Auth;
 use Ramsey\Uuid\Type\Time;
 
@@ -31,14 +32,16 @@ class ListTimesheets extends ListRecords
                     ->action(function () use ($lastTimesheet) {
                         $user = Auth::user();
                         $timesheet = new Timesheet();
-                        $timesheet->calendar_id = 1;
+                        $timesheet->calendar_id = 2;
                         $timesheet->user_id = $user->id;
                         $timesheet->day_in = Carbon::now();
-                        $timesheet ->day_out = '';
+                        $timesheet->day_out = '';
                         $timesheet->type = 'work';
                         $timesheet->save();
                     }),
+
                 Actions\CreateAction::make(),
+
 
             ];
         }
@@ -57,9 +60,14 @@ class ListTimesheets extends ListRecords
                     $timesheet->type = 'work';
                     $timesheet->day_in = $lastTimesheet->day_in;
                     $timesheet->day_out = '';
-
                     $timesheet->save();
+                    Notification::make() // debe estar asociada dentro de una accion por eso no pueden estar a la misma altura que las misma
+                    //esto se refiere a las notificaciones correspondientes a la
+                        ->title('Entrando a trabajar')
+                        ->success()
+                        ->send();
                 }),
+
             Action::make('stopWork')
                 ->label('Parar de trabajar')
                 ->keyBindings(['command+o', 'ctrl+o'])
@@ -79,7 +87,7 @@ class ListTimesheets extends ListRecords
             Action::make('inPause')
                 ->label('Pausar')
                 ->color('warning')
-                ->visible($lastTimesheet->day_out == null && $lastTimesheet->type!='pause')
+                ->visible($lastTimesheet->day_out == null && $lastTimesheet->type != 'pause')
                 ->disabled(!$lastTimesheet->day_out == null)
                 ->action(function () use ($lastTimesheet) {
                     $lastTimesheet->day_out = Carbon::now();
@@ -93,13 +101,13 @@ class ListTimesheets extends ListRecords
                     $timesheet->save();
                 })
                 ->requiresConfirmation(),
-                Action::make('stopPause')
+            Action::make('stopPause')
                 ->label('Parar Pausa')
                 ->color('info')
-                ->visible($lastTimesheet->day_out == null && $lastTimesheet->type=='pause')
+                ->visible($lastTimesheet->day_out == null && $lastTimesheet->type == 'pause')
                 ->disabled(!$lastTimesheet->day_out == null)
                 ->requiresConfirmation()
-                ->action(function () use($lastTimesheet){
+                ->action(function () use ($lastTimesheet) {
                     $lastTimesheet->day_out = Carbon::now();
                     $lastTimesheet->save();
                     $timesheet = new Timesheet();
