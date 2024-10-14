@@ -23,9 +23,11 @@ class TimesheetResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?string $modelLabel = 'Horario';
+
+    /*esta funcion permite montar query personalizadas*/
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->where('user_id', Auth::user()->id);
+        return parent::getEloquentQuery()->where('user_id', Auth::user()->id)->orderBy('user_id','desc');
     }
 
     
@@ -98,6 +100,7 @@ class TimesheetResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
