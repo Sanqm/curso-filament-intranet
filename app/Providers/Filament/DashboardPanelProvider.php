@@ -49,12 +49,11 @@ class DashboardPanelProvider extends PanelProvider
                 PanelRoles::make()
                     ->roleToAssign('super_admin')
                     ->restrictedRoles(['super_admin']),
-                ThemesPlugin::make(),
-
+               
             ])
-            ->plugin(PanelRoles::make()
-                ->roleToAssign('super_admin')
-                ->restrictedRoles(['super_admin']),)
+            
+               
+                
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -66,6 +65,7 @@ class DashboardPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
                 SetTheme::class,
+              
             ])
             ->breadcrumbs(true)
             ->authMiddleware([

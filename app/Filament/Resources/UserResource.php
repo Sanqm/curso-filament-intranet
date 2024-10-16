@@ -23,6 +23,8 @@ use SebastianBergmann\Type\NullType;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Forms\Components\TextInput;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+
 
 class UserResource extends Resource
 {
@@ -160,8 +162,9 @@ class UserResource extends Resource
             ->bulkActions([ // esto se para acciones que atañan a más de un registro, ten cuidado no lo estaba viendo
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
-
+                    ExportBulkAction::make(),
                 ])
+               
             ]);
     }
 
